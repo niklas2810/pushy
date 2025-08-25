@@ -1,3 +1,19 @@
+// Open website when notification is clicked
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function(clientList) {
+      for (const client of clientList) {
+        if (client.url === '/' && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (self.clients.openWindow) {
+        return self.clients.openWindow('/');
+      }
+    })
+  );
+});
 // Auto-update service worker on new version
 self.addEventListener('install', () => {
   console.log('Service worker: Installed. Skipping waiting to activate new version.');
@@ -13,8 +29,10 @@ self.addEventListener('push', function(event) {
   const data = event.data ? event.data.json() : {};
   const title = data.title || 'Push Notification';
   const options = {
+    title: 'Pushy - Scheduled Notification',
     body: data.body || 'You have a new notification!',
     icon: '/favicon.ico',
+    silent: true
   };
   event.waitUntil(self.registration.showNotification(title, options));
 });

@@ -3,13 +3,9 @@
 import { useState, useEffect } from "react";
 import { getOrCreateUserId } from "./getOrCreateUserId";
 import { TitleWithTooltip } from "./TitleWithTooltip";
-import { registerServiceWorker, requestNotificationPermission } from "./register";
+import { requestNotificationPermission } from "./register";
 
 export default function Home() {
-  // Always register service worker on mount
-  useEffect(() => {
-    registerServiceWorker();
-  }, []);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [hasSubscription, setHasSubscription] = useState(false);

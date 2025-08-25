@@ -1,0 +1,27 @@
+{
+  "name": "Pushy",
+  "short_name": "Pushy",
+  "description": "Web Push Notification POC",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#18181b",
+  "theme_color": "#18181b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/img/bell-192.png",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/imgbell-512.png",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    },
+    {
+        "src": "/img/bell.svg",
+        "sizes": "any",
+        "type": "image/svg+xml"
+    }
+  ]
+}
