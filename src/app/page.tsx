@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import { getOrCreateUserId } from "./getOrCreateUserId";
 import { TitleWithTooltip } from "./TitleWithTooltip";
-import { registerPushNotifications } from "./registerPushNotifications";
+import { registerServiceWorker, requestNotificationPermission } from "./register";
 
 export default function Home() {
   // Always register service worker on mount
   useEffect(() => {
-    registerPushNotifications();
+    registerServiceWorker();
   }, []);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -62,6 +62,12 @@ export default function Home() {
     const totalMinutes = hours * 60 + minutes;
     if (!('serviceWorker' in navigator)) {
       console.error('Service workers not supported');
+      return;
+    }
+    // Request notification permission before subscribing
+    const permission = await requestNotificationPermission();
+    if (permission !== 'granted') {
+      console.warn('Notification permission not granted. Subscription will not proceed.');
       return;
     }
     try {
