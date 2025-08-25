@@ -70,11 +70,12 @@ export async function sendNotificationsToAll() {
         try {
             const decodedSubTyped = decodedSub as webpush.PushSubscription;
             await webpush.sendNotification(decodedSubTyped, JSON.stringify({ title: 'Pushy', body: message }));
+            console.log(`Sent notification to uuid ${uuid}`);
             // Update last_sent in DB
             db.prepare('UPDATE subscriptions SET last_sent = ? WHERE uuid = ?').run(now.toISOString(), uuid);
         } catch (err) {
             // Log and continue
-            console.error('Failed to send notification:', err);
+            console.error(`Error sending notification to uuid ${uuid}:`, err);
         }
     }
 }
