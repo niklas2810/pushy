@@ -28,7 +28,7 @@ export default function RootLayout({
       <head>
         <title>Pushy</title>
         <meta name="theme-color" content="#18181b" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Pushy" />
         <link rel="manifest" href="/manifest.json" />
