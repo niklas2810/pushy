@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+# Pushy
+
+A proof-of-concept (POC) Next.js application for testing push notifications via the Web Push API and Service Workers.
+
+## Features
+
+- Set a custom time interval for notifications (1 minute to 24 hours)
+- Start/stop receiving notifications with a simple UI
+- Unique user identification via browser-generated UUID (stored in localStorage)
+- Server stores UUID, interval, and push subscription in SQLite
+- Recurring job checks and sends notifications via Web Push API
+
+## Tech Stack
+
+- **Next.js** (App Router)
+- **TypeScript** (strict mode)
+- **Tailwind CSS** (responsive, dark mode)
+- **SQLite** (user/interval/subscription storage)
+- **Web Push API** (notifications)
+- **Service Workers** (client-side push handling)
+
+## Architecture
+
+- Server and client components (App Router)
+- Feature/domain-based route grouping
+- React Server Components for server state
+- Zod for runtime type validation
+- Error boundaries and proper error handling
+- Optimistic updates and loading/error states
+
+## Security & Performance
+
+- Input validation and sanitization
+- CSRF protection and rate limiting
+- Secure API route handling
+- Image/font optimization
+- Route prefetching and code splitting
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
+	```sh
+	npm install
+	```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Run the development server:**
+	```sh
+	npm run dev
+	```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Build for production:**
+	```sh
+	npm run build
+	```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Start the server:**
+	```sh
+	npm start
+	```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Usage
 
-## Learn More
+1. Open the app in your browser.
+2. Set your desired notification interval.
+3. Click "Start" to begin receiving notifications.
+4. Click "Stop" to unsubscribe.
 
-To learn more about Next.js, take a look at the following resources:
+## File Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/app/` – Main app components, pages, and API routes
+- `src/lib/` – Database and notification logic
+- `public/sw.js` – Service Worker for push notifications
+- `data.db` – SQLite database
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Development Standards
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Type safety and runtime validation
+- Responsive, accessible UI
+- Semantic HTML and container queries
+- Proper error/loading states
