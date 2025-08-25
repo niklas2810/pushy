@@ -1,7 +1,13 @@
 import Database from 'better-sqlite3';
 import webpush from 'web-push';
+import fs from 'fs';
+import path from 'path';
 
-const db = new Database('data.db');
+const dataDir = path.join(process.cwd(), 'data');
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+}
+const db = new Database(path.join(dataDir, 'data.db'));
 
 db.exec(`CREATE TABLE IF NOT EXISTS subscriptions (
   uuid TEXT PRIMARY KEY,
