@@ -98,6 +98,9 @@ export default function Home() {
       const res = await fetch(`/api/subscriptions/${userid}`, { method: 'DELETE' });
       if (res.ok) {
         setHasSubscription(false);
+        setSubscriptionInfo("");
+        setHours(0);
+        setMinutes(0);
         console.log('Unsubscribed successfully.');
       } else {
         const data = await res.json();
