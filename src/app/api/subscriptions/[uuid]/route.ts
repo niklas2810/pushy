@@ -38,6 +38,7 @@ export async function GET(req: NextRequest, context: { params: Promise<{ uuid: s
         }
       }
       return NextResponse.json({
+        uuid: uuid,
         minutes: row.interval_minutes,
         time_created: new Date(row.time_created).toISOString(),
         time_updated: new Date(row.time_updated).toISOString(),

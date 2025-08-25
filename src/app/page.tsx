@@ -22,9 +22,10 @@ export default function Home() {
 
   // On page load, fetch subscription for current UUID
   const [subscriptionInfo, setSubscriptionInfo] = useState<string>("");
-  useEffect(() => {
-    if (!userid) return;
-    fetch(`/api/subscriptions/${userid}`)
+  // Reusable function to fetch subscription info
+  const fetchSubscriptionInfo = (uuid: string) => {
+    if (!uuid) return;
+    fetch(`/api/subscriptions/${uuid}`)
       .then(res => res.json())
       .then(data => {
         setSubscriptionInfo(JSON.stringify(data, null, 2));
@@ -44,6 +45,10 @@ export default function Home() {
         setHasSubscription(false);
         setSubscriptionInfo("");
       });
+  };
+
+  useEffect(() => {
+    fetchSubscriptionInfo(userid);
   }, [userid]);
 
   useEffect(() => {
@@ -75,7 +80,12 @@ export default function Home() {
         minutes: totalMinutes
       });
       setHasSubscription(true);
+      setSubscriptionInfo(`Please wait...`);
       console.log('Message posted to service worker for subscription registration.');
+      setTimeout(() => {
+        // Refetch subscription info after a short delay to allow service worker to process
+        fetchSubscriptionInfo(userid);
+      }, 2000);
     } catch (err) {
       console.error('Failed to post message to service worker:', err);
     }
