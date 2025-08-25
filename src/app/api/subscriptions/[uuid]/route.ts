@@ -1,5 +1,5 @@
-export async function DELETE(req: NextRequest, { params }: { params: { uuid: string } }) {
-  const { uuid } = params;
+export async function DELETE(req: NextRequest, context: { params: Promise<{ uuid: string }> }) {
+  const { uuid } = await context.params;
   try {
     const result = db.prepare('DELETE FROM subscriptions WHERE uuid = ?').run(uuid);
     if (result.changes > 0) {
@@ -16,8 +16,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import db from '@/lib/db';
 import '@/app/notificationJobServer';
 
-export async function GET(req: NextRequest, { params }: { params: { uuid: string } }) {
-  const { uuid } = await params;
+export async function GET(req: NextRequest, context: { params: Promise<{ uuid: string }> }) {
+  const {uuid} = await context.params;
   try {
     type SubscriptionItem = {
       interval_minutes: number;
@@ -53,8 +53,8 @@ export async function GET(req: NextRequest, { params }: { params: { uuid: string
   }
 }
 
-export async function POST(req: NextRequest, { params }: { params: { uuid: string } }) {
-  const { uuid } = await params;
+export async function POST(req: NextRequest, context: { params: Promise<{ uuid: string }> }) {
+  const { uuid } = await context.params;
   const body = await req.json();
   const minutes = Number(body.minutes);
   let subscriptionEncoded = null;
