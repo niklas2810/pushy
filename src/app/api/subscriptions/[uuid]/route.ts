@@ -1,5 +1,17 @@
+
+const validateUuid = (uuid: string) => {
+  if (!uuid) return false;
+  if(uuid.length !== 36) return false;
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(uuid);
+}
+
+
 export async function DELETE(req: NextRequest, context: { params: Promise<{ uuid: string }> }) {
   const { uuid } = await context.params;
+  if (!validateUuid(uuid)) {
+    return NextResponse.json({ error: 'Invalid UUID format' }, { status: 400 });
+  }
   try {
     const result = db.prepare('DELETE FROM subscriptions WHERE uuid = ?').run(uuid);
     if (result.changes > 0) {
@@ -17,7 +29,10 @@ import db from '@/lib/db';
 import '@/app/notificationJobServer';
 
 export async function GET(req: NextRequest, context: { params: Promise<{ uuid: string }> }) {
-  const {uuid} = await context.params;
+  const { uuid } = await context.params;
+  if (!validateUuid(uuid)) {
+    return NextResponse.json({ error: 'Invalid UUID format' }, { status: 400 });
+  }
   try {
     type SubscriptionItem = {
       interval_minutes: number;
@@ -56,6 +71,9 @@ export async function GET(req: NextRequest, context: { params: Promise<{ uuid: s
 
 export async function POST(req: NextRequest, context: { params: Promise<{ uuid: string }> }) {
   const { uuid } = await context.params;
+  if (!validateUuid(uuid)) {
+    return NextResponse.json({ error: 'Invalid UUID format' }, { status: 400 });
+  }
   const body = await req.json();
   const minutes = Number(body.minutes);
   let subscriptionEncoded = null;
