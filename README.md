@@ -16,6 +16,7 @@ A proof-of-concept (POC) Next.js application for testing push notifications via 
 - **Next.js** (App Router)
 - **TypeScript** (strict mode)
 - **Tailwind CSS** (responsive, dark mode)
+- **Tabler Icons** (icons under MIT license, https://github.com/tabler/tabler-icons)
 - **SQLite** (user/interval/subscription storage)
 - **Web Push API** (notifications)
 - **Service Workers** (client-side push handling)
